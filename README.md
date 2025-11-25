@@ -1,140 +1,124 @@
-README.md
-**Product Management App — Vue 3 + Pinia + TailwindCSS**
+# **Product Management App — Vue 3 + Pinia + TailwindCSS**
 
-This is a mini Product Management application built using Vue 3, Pinia, Vue Router, and Tailwind CSS, based on the Frontend Technical Test by AlienSoft Technologies.
+A mini Product Management application built using **Vue 3**, **Pinia**, **Vue Router**, and **Tailwind CSS**, based on the *Frontend Technical Test* by AlienSoft Technologies.
 
-**The app communicates with the DummyJSON API to handle:**
+The application integrates with the **DummyJSON API** for authentication and product management.
 
-User authentication
+---
 
-Product listing
+## 🚀 **Features**
 
-Product search
+### 🔐 **Authentication**
+- Login using DummyJSON authentication  
+- Token stored in **Pinia + localStorage**  
+- Redirects to **`/products`** after login  
+- Full route protection  
+- Logout button on the Product List page  
 
-View product
+---
 
-Add new product
-**
-🚀 Features**
-Authentication
+### 📦 **Products**
+- Product list page with:
+  - Search by product title  
+  - Thumbnail, title, truncated description, category, price & stock  
+- View Product page with full details  
+- Add Product form with:
+  - Title  
+  - Description  
+  - Category  
+  - Price  
+  - Stock  
+  - Thumbnail upload (click or drag & drop)  
+- Form validation on required fields  
+- Store updates immediately after product creation  
 
-Login using DummyJSON authentication
+---
 
-Successful login stores token in Pinia + localStorage
+## 🗃 **State Management (Pinia)**
 
-Redirects to /products after login
+### **authStore**
+- `token`  
+- `user`  
+- `isAuthenticated`  
+- Session persistence  
 
-Route protection for all product pages
+### **productsStore**
+- Fetch all products  
+- Add new product  
+- Fetch product by ID  
 
-Logout button located at the bottom of the Product List page
+---
 
-Products
+## 🛠 **Tech Stack**
+- **Vue 3** (Composition API)  
+- **Pinia**  
+- **Vue Router**  
+- **Tailwind CSS**  
+- **Fetch / Axios**  
+- **DummyJSON API**  
 
-Product list page with:
+---
 
-Search by title
+## 📦 **Project Setup**
 
-Clean table UI with thumbnails, description, category, price & stock
+### 1️⃣ **Clone the repository**
+```bash
+git clone https://github.com/Vinmumo/product-manager.git
+cd product-manager
 
-View Product page with full details
-
-Add Product page with form fields:
-
-Title, description, category, price, stock, thumbnail URL
-
-After adding product, store updates and user is redirected
-
-State Management
-
-Pinia Stores:
-
-authStore – token, user, session persistence
-
-productStore – fetch/add/view products
-
-**🛠 Tech Stack**
-
-Vue 3 (Composition API)
-
-Vue Router
-
-Pinia
-
-Tailwind CSS
-
-Fetch / Axios 
-
-DummyJSON API
-
-
-**
-📦 Project Setup**
-
-Clone the repository:
-
-git clone <https://github.com/Vinmumo/product-manager.git>
-cd <product-manager>
-
-**
-Install dependencies:**
-
+2️⃣ Install dependencies
 npm install
 
-**
-Run development server:**
-
+3️⃣ Run the development server
 npm run dev
 
-
-**Build for production:**
-
+4️⃣ Build for production
 npm run build
 
-**
-Preview production build:**
-
+5️⃣ Preview production build
 npm run preview
 
-**🔧 Environment / Config**
+🔧 Environment / Config
 
 No .env file is required.
-**
-Base API URLs used:**
 
-https://dummyjson.com/auth/login
-https://dummyjson.com/products
+API Endpoints Used
 
+Auth: https://dummyjson.com/auth/login
 
-**Routing**
+Products: https://dummyjson.com/products
 
-/login → Login page
-
-/products → Product list
-
-/products/:id → View product
-
-/products/new → Add product
-**
-🔐 Authentication Flow**
+🗂 Routing Structure
+Route	Description
+/login	Login page
+/products	Product list
+/products/:id	View product details
+/products/new	Add new product
+🔐 Authentication Flow
 
 User logs in at /login
 
-App sends POST request to DummyJSON login API
+Credentials are sent to the DummyJSON Auth API
 
-On success:
+On successful login:
 
 Token is saved in Pinia
 
-Token persists to localStorage
+Token is persisted to localStorage
 
-Redirects to /products
+User is redirected to /products
 
-Protected routes check authStore.isAuthenticated
+Navigation guards protect all authenticated routes
 
-**📄 Assumptions Made**
+📄 Assumptions
 
-After login, user is redirected to /products as the home screen.
+/products functions as the main dashboard after login
 
-Logout simply clears the auth store + localStorage and redirects to /login.
+Logging out clears the auth store and redirects to /login
 
-Update and delete product are optional will be included.
+Update/Delete product features are optional and may be added later
+
+🌐 Live Deployment
+
+🔗 Live Demo: Add your GitHub Pages link here
+🔗 Repository: https://github.com/Vinmumo/product-manager
