@@ -65,20 +65,29 @@ The application integrates with the **DummyJSON API** for authentication and pro
 ```bash
 git clone https://github.com/Vinmumo/product-manager.git
 cd product-manager
+```
 
-2️⃣ Install dependencies
+### 2️⃣ Install dependencies
+```bash
 npm install
+```
 
-3️⃣ Run the development server
+### 3️⃣ Run the development server
+```bash
 npm run dev
+```
 
-4️⃣ Build for production
+### 4️⃣ Build for production
+```bash
 npm run build
+```
 
-5️⃣ Preview production build
+### 5️⃣ Preview production build
+```bash
 npm run preview
+```
 
-🔧 Environment / Config
+## **🔧 Environment / Config**
 
 No .env file is required.
 
@@ -88,13 +97,14 @@ Auth: https://dummyjson.com/auth/login
 
 Products: https://dummyjson.com/products
 
-🗂 Routing Structure
+## **🗂 Routing Structure**
 Route	Description
 /login	Login page
 /products	Product list
 /products/:id	View product details
 /products/new	Add new product
-🔐 Authentication Flow
+
+## **🔐 Authentication Flow**
 
 User logs in at /login
 
@@ -110,7 +120,7 @@ User is redirected to /products
 
 Navigation guards protect all authenticated routes
 
-📄 Assumptions
+## **📄 Assumptions**
 
 /products functions as the main dashboard after login
 
@@ -118,7 +128,7 @@ Logging out clears the auth store and redirects to /login
 
 Update/Delete product features are optional and may be added later
 
-🌐 Live Deployment
+## **🌐 Live Deployment** 
 
 🔗 Live Demo: Add your GitHub Pages link here
 🔗 Repository: https://github.com/Vinmumo/product-manager
