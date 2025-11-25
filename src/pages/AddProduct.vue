@@ -22,15 +22,18 @@
         <div>
           <h2 class="font-semibold text-lg mb-4">Product Information</h2>
 
+          <!-- Title -->
           <label class="block text-sm font-medium">Product Title</label>
           <input
             v-model="title"
-            required
-            class="w-full border rounded-md p-3 mt-1 mb-5 bg-gray-50"
+            class="w-full border rounded-md p-3 mt-1 mb-1 bg-gray-50"
+            :class="{ 'border-red-500': errors.title }"
             placeholder="Enter product title"
           />
+          <p v-if="errors.title" class="text-red-500 text-sm">{{ errors.title }}</p>
 
-          <label class="block text-sm font-medium">Product Description</label>
+          <!-- Description -->
+          <label class="block text-sm font-medium mt-5">Product Description</label>
           <textarea
             v-model="description"
             class="w-full border rounded-md p-3 h-28 mt-1 bg-gray-50"
@@ -44,25 +47,30 @@
 
           <div class="grid grid-cols-2 gap-6">
 
+            <!-- Price -->
             <div>
               <label class="block text-sm font-medium">Price</label>
               <input
                 type="number"
-                step="0.01"
                 v-model.number="price"
                 class="w-full border rounded-md p-3 mt-1 bg-gray-50"
+                :class="{ 'border-red-500': errors.price }"
                 placeholder="$ 0.00"
               />
+              <p v-if="errors.price" class="text-red-500 text-sm">{{ errors.price }}</p>
             </div>
 
+            <!-- Stock -->
             <div>
               <label class="block text-sm font-medium">Stock Quantity</label>
               <input
                 type="number"
                 v-model.number="stock"
                 class="w-full border rounded-md p-3 mt-1 bg-gray-50"
+                :class="{ 'border-red-500': errors.stock }"
                 placeholder="Enter stock quantity"
               />
+              <p v-if="errors.stock" class="text-red-500 text-sm">{{ errors.stock }}</p>
             </div>
           </div>
 
@@ -71,6 +79,7 @@
           <select
             v-model="category"
             class="w-full border rounded-md p-3 mt-1 bg-gray-50"
+            :class="{ 'border-red-500': errors.category }"
           >
             <option value="">Select a category</option>
 
@@ -82,6 +91,7 @@
               {{ c.name }}
             </option>
           </select>
+          <p v-if="errors.category" class="text-red-500 text-sm">{{ errors.category }}</p>
         </div>
 
         <!-- Media Section -->
@@ -94,7 +104,7 @@
             @dragover.prevent="dragging = true"
             @dragleave="dragging = false"
             @drop.prevent="handleDrop"
-            :class="{ 'border-blue-500 bg-blue-50': dragging }"
+            :class="{ 'border-blue-500 bg-blue-50': dragging, 'border-red-500': errors.thumbnail }"
           >
             <div class="text-4xl">⬆️</div>
             <p class="mt-2">
@@ -106,6 +116,7 @@
             </p>
           </div>
 
+          <!-- File Input -->
           <input
             type="file"
             ref="fileInput"
@@ -114,11 +125,16 @@
             @change="handleFileInput"
           />
 
+          <!-- Thumbnail Preview -->
           <img
             v-if="thumbnail"
             :src="thumbnail"
             class="w-40 rounded-lg mt-5 border"
           />
+
+          <p v-if="errors.thumbnail" class="text-red-500 text-sm mt-2">
+            {{ errors.thumbnail }}
+          </p>
         </div>
 
         <!-- Buttons -->
@@ -133,13 +149,14 @@
 
           <button
             type="submit"
-            class="px-6 py-3 rounded-lg bg-blue-900 text-gray-200 hover:bg-blue-900"
+            class="px-6 py-3 rounded-lg bg-blue-900 text-gray-200 hover:bg-blue-800"
           >
             {{ loading ? "Saving..." : "Save Product" }}
           </button>
         </div>
       </form>
 
+      <!-- Global Error -->
       <p v-if="error" class="text-red-600 text-sm mt-4">
         {{ error }}
       </p>
@@ -160,8 +177,8 @@ const categoriesStore = useCategoriesStore()
 
 const title = ref('')
 const description = ref('')
-const price = ref(0)
-const stock = ref(0)
+const price = ref(null)
+const stock = ref(null)
 const category = ref('')
 const thumbnail = ref('')
 const dragging = ref(false)
@@ -172,14 +189,22 @@ const showSuccess = ref(false)
 
 const fileInput = ref(null)
 
-// Fetch all categories on page load
+// Validation errors
+const errors = ref({
+  title: '',
+  price: '',
+  stock: '',
+  category: '',
+  thumbnail: ''
+})
+
+// Load category list
 onMounted(() => {
   categoriesStore.fetchCategories()
 })
 
-const triggerFileSelect = () => {
-  fileInput.value.click()
-}
+// Thumbnail upload flow
+const triggerFileSelect = () => fileInput.value.click()
 
 const handleFileInput = (event) => {
   const file = event.target.files[0]
@@ -192,7 +217,7 @@ const handleDrop = (event) => {
   if (file) convertToBase64(file)
 }
 
-function convertToBase64(file) {
+const convertToBase64 = (file) => {
   const reader = new FileReader()
   reader.onload = () => {
     thumbnail.value = reader.result
@@ -200,9 +225,53 @@ function convertToBase64(file) {
   reader.readAsDataURL(file)
 }
 
+// Validation logic
+const validateForm = () => {
+  let valid = true
+
+  errors.value = {
+    title: '',
+    price: '',
+    stock: '',
+    category: '',
+    thumbnail: ''
+  }
+
+  if (!title.value.trim()) {
+    errors.value.title = 'Title is required.'
+    valid = false
+  }
+
+  if (!price.value || price.value <= 0) {
+    errors.value.price = 'Price must be greater than zero.'
+    valid = false
+  }
+
+  if (stock.value === null || stock.value < 0) {
+    errors.value.stock = 'Stock must be zero or more.'
+    valid = false
+  }
+
+  if (!category.value) {
+    errors.value.category = 'Please select a category.'
+    valid = false
+  }
+
+  if (!thumbnail.value) {
+    errors.value.thumbnail = 'Product image is required.'
+    valid = false
+  }
+
+  return valid
+}
+
+// Submit Handler
 const submit = async () => {
-  loading.value = true
   error.value = null
+
+  if (!validateForm()) return
+
+  loading.value = true
 
   const payload = {
     title: title.value,
