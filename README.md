@@ -1,9 +1,9 @@
 README.md
-Product Management App — Vue 3 + Pinia + TailwindCSS
+**Product Management App — Vue 3 + Pinia + TailwindCSS**
 
 This is a mini Product Management application built using Vue 3, Pinia, Vue Router, and Tailwind CSS, based on the Frontend Technical Test by AlienSoft Technologies.
 
-The app communicates with the DummyJSON API to handle:
+**The app communicates with the DummyJSON API to handle:**
 
 User authentication
 
@@ -14,8 +14,8 @@ Product search
 View product
 
 Add new product
-
-🚀 Features
+**
+🚀 Features**
 Authentication
 
 Login using DummyJSON authentication
@@ -52,7 +52,7 @@ authStore – token, user, session persistence
 
 productStore – fetch/add/view products
 
-🛠 Tech Stack
+**🛠 Tech Stack**
 
 Vue 3 (Composition API)
 
@@ -67,45 +67,45 @@ Fetch / Axios
 DummyJSON API
 
 
-
-📦 Project Setup
+**
+📦 Project Setup**
 
 Clone the repository:
 
 git clone <https://github.com/Vinmumo/product-manager.git>
 cd <product-manager>
 
-
-Install dependencies:
+**
+Install dependencies:**
 
 npm install
 
-
-Run development server:
+**
+Run development server:**
 
 npm run dev
 
 
-Build for production:
+**Build for production:**
 
 npm run build
 
-
-Preview production build:
+**
+Preview production build:**
 
 npm run preview
 
-🔧 Environment / Config
+**🔧 Environment / Config**
 
 No .env file is required.
-
-Base API URLs used:
+**
+Base API URLs used:**
 
 https://dummyjson.com/auth/login
 https://dummyjson.com/products
 
 
-Routing
+**Routing**
 
 /login → Login page
 
@@ -114,8 +114,8 @@ Routing
 /products/:id → View product
 
 /products/new → Add product
-
-🔐 Authentication Flow
+**
+🔐 Authentication Flow**
 
 User logs in at /login
 
@@ -131,7 +131,7 @@ Redirects to /products
 
 Protected routes check authStore.isAuthenticated
 
-📄 Assumptions Made
+**📄 Assumptions Made**
 
 After login, user is redirected to /products as the home screen.
 
